@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20170312100337) do
 
-  create_table "statuses", force: :cascade do |t|
+  create_table "statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "status",     null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
