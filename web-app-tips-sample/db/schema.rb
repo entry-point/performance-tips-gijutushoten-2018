@@ -10,12 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170312100337) do
+ActiveRecord::Schema.define(version: 20170314164718) do
 
   create_table "statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "status",     null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name",       null: false
+    t.integer  "age",        null: false
+    t.string   "sex",        null: false
+    t.string   "email",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["age"], name: "index_users_on_age", using: :btree
+    t.index ["email"], name: "index_users_on_email", using: :btree
+    t.index ["name"], name: "index_users_on_name", using: :btree
+    t.index ["sex"], name: "index_users_on_sex", using: :btree
   end
 
 end

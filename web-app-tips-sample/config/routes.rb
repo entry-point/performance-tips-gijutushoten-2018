@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   resource :status
   resource :async_status
   resource :update_status
+  resource :searching_user_not_use_index, controller: :searching_user_not_use_index
+  resource :searching_user_use_index, controller: :searching_user_use_index
 end
