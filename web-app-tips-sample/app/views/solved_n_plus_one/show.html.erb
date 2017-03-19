@@ -1,0 +1,17 @@
+<p>Solved n plus one</p>
+
+<h1>User comments</h1>
+<table>
+  <thead>
+    <th>name</th>
+    <th>comment</th>
+  </thead>
+  <tbody>
+  <% @users_comments.each do |user_comment| %>
+    <tr>
+      <td><%= user_comment.name %></td>
+      <td><%= user_comment.comment %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

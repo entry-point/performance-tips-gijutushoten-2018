@@ -1,0 +1,2 @@
+module SolvedNPlusOneHelper
+end

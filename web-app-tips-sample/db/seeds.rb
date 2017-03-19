@@ -1,10 +1,11 @@
 Status.create!(status: 'ok')
 
-insert_lines_forusers = (User.count - 5_000_000).abs
+insert_lines_for_users = (1_000_000 - User.count).abs
 puts 'insert of seeds for users...'
 users = []
+users_bar = ProgressBar.new(insert_lines_for_users)
 columns_for_users = [:name, :age, :sex, :email]
-insert_lines_forusers.times do
+insert_lines_for_users.times do
   users << [
     Faker::Name.name,
     Faker::Number.between(0, 120),
@@ -13,8 +14,27 @@ insert_lines_forusers.times do
   ]
 
   if users.length == 10_000
-    print '.'
     User.import columns_for_users, users, validate: false
+    users_bar.increment! 10_000
     users = []
+  end
+end
+
+insert_lines_for_comments = (100_000 - Comment.count).abs
+puts 'insert of seeds for comments...'
+comments = []
+comments_bar = ProgressBar.new(insert_lines_for_comments)
+columns_for_comments = [:user_id, :comment]
+user_count = User.count
+insert_lines_for_comments.times do
+  comments << [
+    rand(0..user_count),
+    Faker::Twitter.user[:status][:text]
+  ]
+
+  if comments.length == 10_000
+    Comment.import columns_for_comments, comments, validate: false
+    comments_bar.increment! 10_000
+    comments = []
   end
 end
