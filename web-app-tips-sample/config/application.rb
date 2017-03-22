@@ -14,5 +14,7 @@ module WebAppTipsSample
     config.autoload_paths << "#{Rails.root}/app/services/*"
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.middleware.insert_after(0, Rack::LtsvLogger, $stdout)
   end
 end

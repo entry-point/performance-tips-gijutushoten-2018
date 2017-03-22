@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   resource :searching_user_use_index, controller: :searching_user_use_index
   resource :solved_n_plus_one, controller: :solved_n_plus_one
   resource :unsolved_n_plus_one, controller: :unsolved_n_plus_one
+  resource :after_lock_table_of_comments
 end

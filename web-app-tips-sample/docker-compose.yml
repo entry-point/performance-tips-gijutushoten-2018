@@ -12,3 +12,10 @@ services:
       - MYSQL_PASSWORD=webapptips
     ports:
       - 3306:3306
+  fluentd:
+    build:
+      context: ./docker-fluentd
+      dockerfile: Dockerfile-fluentd-custom
+    image: fluentd:custom
+    ports:
+      - 24224:24224

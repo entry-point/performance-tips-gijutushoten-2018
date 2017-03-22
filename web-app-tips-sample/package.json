@@ -1,0 +1,11 @@
+{
+  "name": "web-app-tips-sample",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.2.4",
+    "vue-axios": "^2.0.1",
+    "vue-router": "^2.3.0",
+    "vuex": "^2.2.1"
+  }
+}
