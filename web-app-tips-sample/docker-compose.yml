@@ -10,6 +10,8 @@ services:
       - MYSQL_ROOT_PASSWORD=webapptips
       - MYSQL_USER=webapptips
       - MYSQL_PASSWORD=webapptips
+    volumes:
+      - ./docker-mysql:/etc/mysql/conf.d
     ports:
       - 3306:3306
   fluentd:
