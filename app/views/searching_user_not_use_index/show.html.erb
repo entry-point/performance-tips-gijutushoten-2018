@@ -1,0 +1,28 @@
+<p>Searching user <b>not use</b> index</p>
+
+<%= form_tag searching_user_not_use_index_path, method: :get do %>
+  Name: <%= text_field_tag(:name, @search_name) %>
+  Age(>=): <%= text_field_tag(:age, @search_age) %>
+  <%= submit_tag "searching", data: { disable_with: "searching..." } %>
+<% end %>
+
+<table class="margin-top: 20px;">
+  <thead>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Age</th>
+    <th>Sex</th>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.age %></td>
+      <td><%= user.sex %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users %>

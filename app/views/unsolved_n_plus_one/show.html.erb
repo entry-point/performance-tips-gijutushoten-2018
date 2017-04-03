@@ -1,0 +1,17 @@
+<p>Unsolved n plus one</p>
+
+<h1>User comments</h1>
+<table>
+  <thead>
+    <th>name</th>
+    <th>comment</th>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= (@comments.select { |c| c.user_id == user.id }).first.comment %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

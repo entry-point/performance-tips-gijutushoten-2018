@@ -1,0 +1,2 @@
+module UpdateStatusesHelper
+end

@@ -1,0 +1,26 @@
+<p>Comments</p>
+
+<%= form_tag after_lock_table_of_comments_path, method: :post do %>
+  Name: <%= text_field_tag(:name, @name) %>
+  Comment: <%= text_field_tag(:comment, @comment) %>
+  <%= submit_tag "send", data: { disable_with: "sending..." } %>
+<% end %>
+
+<table>
+  <thead>
+    <th>name</th>
+    <th>comment</th>
+    <th>created_at</th>
+  </thead>
+  <tbody>
+  <% @users_comments.each do |user_comment| %>
+    <tr>
+      <td><%= user_comment.name %></td>
+      <td><%= user_comment.comment %></td>
+      <td><%= user_comment.created_at %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users_comments %>

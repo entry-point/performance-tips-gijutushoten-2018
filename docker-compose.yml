@@ -1,0 +1,23 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=webapptips
+      - MYSQL_USER=webapptips
+      - MYSQL_PASSWORD=webapptips
+    volumes:
+      - ./docker-mysql:/etc/mysql/conf.d
+    ports:
+      - 3306:3306
+  fluentd:
+    build:
+      context: ./docker-fluentd
+      dockerfile: Dockerfile-fluentd-custom
+    image: fluentd:custom
+    ports:
+      - 24224:24224

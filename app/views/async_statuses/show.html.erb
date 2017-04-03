@@ -1,0 +1,8 @@
+<% if @notice.present? %>
+  <p><%= @notice %></p>
+<% end %>
+<p>status: <%= @status %></p>
+<p>created_at <%= @created_at %></p>
+<%= form_tag async_status_path, method: :post do %>
+  <%= submit_tag "update", data: { disable_with: "updating..." } %>
+<% end %>
