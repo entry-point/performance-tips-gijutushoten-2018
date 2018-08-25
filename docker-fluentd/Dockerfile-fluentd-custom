@@ -1,16 +1,10 @@
-FROM fluent/fluentd:onbuild
-
-USER root
+FROM fluent/fluentd:v1.2.5-onbuild
 
 RUN apk add --update --virtual .build-deps \
        sudo build-base ruby-dev mariadb-dev \
-    && sudo -u fluent gem install \
+    && sudo gem install \
            fluent-plugin-mysql \
-    && sudo -u fluent gem sources --clear-all \
+    && sudo gem sources --clear-all \
     && apk del .build-deps \
     && rm -rf /var/cache/apk/* \
-              /home/fluent/.gem/ruby/2.3.0/cache/*.gem
-
-USER fluent
-
-EXPOSE 24284
+              /home/fluent/.gem/ruby/2.4.0/cache/*.gem
