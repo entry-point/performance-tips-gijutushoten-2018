@@ -10,6 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=webapptips
       - MYSQL_USER=webapptips
       - MYSQL_PASSWORD=webapptips
+      - MYSQL_DATABASE=webapptips
     volumes:
       - ./docker-mysql:/etc/mysql/conf.d
     ports:

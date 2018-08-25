@@ -1,20 +1,5 @@
-/* eslint global-require: 0 */
-// Note: You must run bin/webpack for changes to take effect
+process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const CompressionPlugin = require('compression-webpack-plugin')
-const sharedConfig = require('./shared.js')
+const environment = require('./environment')
 
-module.exports = merge(sharedConfig, {
-  output: { filename: '[name]-[chunkhash].js' },
-
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
-    new CompressionPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.(js|css|svg|eot|ttf|woff|woff2)$/
-    })
-  ]
-})
+module.exports = environment.toWebpackConfig()
