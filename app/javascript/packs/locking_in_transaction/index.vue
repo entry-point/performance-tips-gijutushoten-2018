@@ -8,8 +8,8 @@
     </div>
     <div>
       <input v-model="seconds" placeholder="seconds(integer)" size="3"/>seconds
-      <button class="pure-button" v-on:click="getUserComments(seconds)">Get User Comments</button>
-      <button class="pure-button" v-on:click="updateUserComment(seconds)">Random update!</button>
+      <button class="btn" v-on:click="getUserComments(seconds)">Get User Comments</button>
+      <button class="btn" v-on:click="updateUserComment(seconds)">Random update!</button>
     </div>
     <hr/>
     <div v-if="lists.length === 0">
