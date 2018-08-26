@@ -1,5 +1,5 @@
 <p>status: <%= @status %></p>
 <p>created_at <%= @created_at %></p>
 <%= form_tag status_path, method: :post do %>
-  <%= submit_tag "update", data: { disable_with: "updating..." }, class: 'pure-button pure-button-primary' %>
+  <%= submit_tag "update", data: { disable_with: "updating..." }, class: 'btn primary' %>
 <% end %>
