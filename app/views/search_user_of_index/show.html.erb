@@ -1,0 +1,29 @@
+<p>インデックスを利用して検索を行う場合</p>
+
+<%= form_tag search_user_of_index_path, method: :get do %>
+  名前: <%= text_field_tag(:name, @search_name, class: 'card') %>
+  年齢(何歳以上): <%= text_field_tag(:age, @search_age, class: 'card') %>
+  インデックスを使う: <%= check_box_tag(:use_index, :is_use, checked: @use_index) %>
+  <%= submit_tag "searching", data: { disable_with: "searching..." }, class: 'btn primary' %>
+<% end %>
+
+<table class="pure-table" style="margin-top: 20px;">
+  <thead>
+    <th>名前</th>
+    <th>メールアドレス</th>
+    <th>年齢</th>
+    <th>性別</th>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.age %></td>
+      <td><%= user.sex %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users %>
