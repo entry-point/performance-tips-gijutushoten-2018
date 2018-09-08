@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'vendor/**/*'
+    - 'spec/fixtures/**/*'
+    - 'tmp/**/*'
+    - 'node_modules/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
