@@ -1,0 +1,28 @@
+<% if @notice.present? %>
+  <p><%= @notice %></p>
+<% end %>
+<%= form_tag async_path, method: :post do %>
+  <%= submit_tag "キューを追加する", data: { disable_with: "更新中" }, class: 'btn primary' %>
+<% end %>
+
+<%= paginate @enque_records %>
+
+<table class="pure-table" style="margin-top: 20px">
+  <thead>
+    <th>id</th>
+    <th>処理を開始してから掛かった時間(秒)</th>
+    <th>ステータス</th>
+    <th>作成時刻</th>
+  </thead>
+  <tbody>
+  <% @enque_records.each do |er| %>
+    <tr>
+      <td><%= er.id %></td>
+      <td style="text-align: right;"><%= er.elapsed_time %></td>
+      <td><%= er.status %></td>
+      <td><%= er.created_at %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= paginate @enque_records %>
