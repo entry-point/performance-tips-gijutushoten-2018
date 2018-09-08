@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'home#index'
+  resource :async
   resource :status
   resource :async_status
   resource :update_status
@@ -14,4 +15,7 @@ Rails.application.routes.draw do
     resource :locking_in_transaction, controller: :locking_in_transaction
     resource :get_user_comment, controller: :get_user_comment
   end
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end

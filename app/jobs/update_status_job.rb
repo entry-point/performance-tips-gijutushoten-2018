@@ -1,5 +1,5 @@
 class UpdateStatusJob < ApplicationJob
-  queue_as :default
+  queue_as :async_sample
 
   def perform(*args)
     sleep 15
