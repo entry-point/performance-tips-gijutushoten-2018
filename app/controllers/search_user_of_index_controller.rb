@@ -4,7 +4,6 @@ class SearchUserOfIndexController < ApplicationController
   after_action :assign_params
 
   def show
-    binding.pry
     if use_index?
       @users = search_users_use_index(*generate_conditions)
     else
