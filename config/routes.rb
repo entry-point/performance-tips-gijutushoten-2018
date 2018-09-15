@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
   resource :async
   resource :status
+  resource :n_plus_one, controller: :n_plus_one
   resource :async_status
   resource :update_status
   resource :search_user_of_index, controller: :search_user_of_index
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
   namespace :api do
     resource :locking_in_transaction, controller: :locking_in_transaction
     resource :get_user_comment, controller: :get_user_comment
+    resource :n_plus_one, controller: :n_plus_one
   end
 
   require 'sidekiq/web'

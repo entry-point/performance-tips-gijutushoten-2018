@@ -1,0 +1,23 @@
+<p>N+1が発生する場合/しない場合</p>
+
+<h1>ユーザのコメント</h1>
+
+<p>検索に掛かった時間 <%= @search_time %> ms</p>
+<%= paginate @users_comments %>
+
+<table class="w-100">
+  <thead>
+    <th>name</th>
+    <th>comment</th>
+  </thead>
+  <tbody>
+  <% @users_comments.each do |uc| %>
+    <tr>
+      <td><%= uc&.name %></td>
+      <td><%= uc&.comment %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users_comments %>
