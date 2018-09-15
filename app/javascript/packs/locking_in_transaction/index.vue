@@ -26,7 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="list in lists">
+          <tr v-for="list in lists" v-bind:key="list.name">
             <td>{{ list.name }}</td>
             <td>{{ list.email }}</td>
             <td>{{ list.comment }}</td>
@@ -55,7 +55,8 @@ export default {
       lockingStatus: 'not locking',
       getUserCommentStatus: 'empty',
       lists: [],
-      seconds: 10
+      seconds: 10,
+      isLoading: false
     }
   },
   methods: {
