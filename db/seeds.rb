@@ -38,3 +38,6 @@ insert_lines_for_comments.times do
     comments = []
   end
 end
+
+puts 'insert of seeds for dice'
+DiceLog.create!(roll: rand(1..6))

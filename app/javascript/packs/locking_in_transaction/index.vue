@@ -1,39 +1,16 @@
 <template>
   <div>
-    <h1>Lists (locking)</h1>
+    <h1>ロック状態を確認する</h1>
     <div>
-      <h2>status</h2>
-      <p>lock status: {{ lockingStatus }}</p>
-      <p>get user comments: {{ getUserCommentStatus }}</p>
+      <p>
+        サイコロの目
+        <span style="margin-left: 20px;">{{ diceRoll }}</span>
+        最終更新日時
+        <span style="margin-left: 20px;">{{ diceLastUpdate }}</span>
+      </p>
     </div>
     <div>
-      <input v-model="seconds" placeholder="seconds(integer)" size="3"/>seconds
-      <button class="btn" v-on:click="getUserComments(seconds)">Get User Comments</button>
-      <button class="btn" v-on:click="updateUserComment(seconds)">Random update!</button>
-    </div>
-    <hr/>
-    <div v-if="lists.length === 0">
-      loading...
-    </div>
-    <div v-if="lists.length > 0">
-      <table class="pure-table">
-        <thead>
-          <tr>
-            <th>name</th>
-            <th>email</th>
-            <th>comment</th>
-            <th>updated_at</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="list in lists" v-bind:key="list.name">
-            <td>{{ list.name }}</td>
-            <td>{{ list.email }}</td>
-            <td>{{ list.comment }}</td>
-            <td>{{ list.updated_at }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <button v-on:click="updateDiceRoll" class="btn primary">更新をする</button>
     </div>
   </div>
 </template>
@@ -42,41 +19,40 @@
 import Vue from 'vue/dist/vue.esm';
 import axios from 'axios/dist/axios';
 import VueAxios from 'vue-axios/dist/vue-axios.es5';
+import { format, parse } from 'date-fns';
 
 Vue.use(VueAxios, axios);
 
-const lockingApiUrl = '/api/locking_in_transaction';
-const apiUrl = '/api/get_user_comment';
+const shootDiceApiUrl = '/api/shoot_dice';
 
 export default {
   name: 'api',
   data() {
     return {
-      lockingStatus: 'not locking',
-      getUserCommentStatus: 'empty',
-      lists: [],
       seconds: 10,
-      isLoading: false
+      isLoading: false,
+      diceRoll: '',
+      diceLastUpdate: '',
     }
   },
   methods: {
-    updateUserComment: function(seconds=0) {
-      this.lockingStatus = 'record locking!';
-      Vue.axios.get(`${lockingApiUrl}?sleep_seconds=${seconds}`).then((response) => {
-        this.lockingStatus = 'done';
-      });
+    getDiceRoll: function() {
+      Vue.axios.get(shootDiceApiUrl).then((response) => {
+        this.diceRoll = response.data.dice_log.roll;
+        this.diceLastUpdate = format(parse(response.data.dice_log.updated_at), 'YYYY-MM-DD HH:mm:ss');
+      })
     },
-    getUserComments: function(seconds=0) {
-      this.lists = [];
-      this.getUserCommentStatus = 'get user comments';
-      Vue.axios.get(apiUrl).then((response) => {
-        this.lists = response.data.lists;
-        this.getUserCommentStatus = 'done';
-      });
-    }
+    updateDiceRoll: function() {
+      let token = document.getElementsByName('csrf-token')[0].getAttribute('content');
+      axios.defaults.headers.common["X-CSRF-Token"] = token;
+      Vue.axios.post(shootDiceApiUrl).then((response) => {
+        this.diceRoll = response.data.dice_log.roll;
+        this.diceLastUpdate = format(parse(response.data.dice_log.updated_at), 'YYYY-MM-DD HH:mm:ss');
+      })
+    },
   },
   beforeMount() {
-    this.getUserComments(0);
+    this.getDiceRoll();
   }
 }
 </script>

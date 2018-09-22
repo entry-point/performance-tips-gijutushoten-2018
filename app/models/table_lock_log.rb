@@ -1,0 +1,2 @@
+class TableLockLog < ApplicationRecord
+end
