@@ -6,10 +6,11 @@ class Api::LockingInTransactionController < ApplicationController
         .select('users.*, comments.comment')
         .order(:id)
         .limit(20)
-      user_comments.lock!
 
       user_comment = user_comments.sample
       user_comment.comment = Faker::Twitter.user[:status][:text]
+      user_comment.lock!
+
       sleep sleep_seconds
       user_comment.save!
     end

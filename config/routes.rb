@@ -14,8 +14,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     resource :locking_in_transaction, controller: :locking_in_transaction
-    resource :get_user_comment, controller: :get_user_comment
     resource :n_plus_one, controller: :n_plus_one
+    resource :shoot_dice, controller: :shoot_dice
   end
 
   require 'sidekiq/web'
