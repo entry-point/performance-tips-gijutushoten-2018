@@ -1,6 +1,6 @@
 Status.create!(status: 'ok')
 
-insert_lines_for_users = (1_000_000 - User.count).abs
+insert_lines_for_users = (1_500_000 - User.count).abs
 puts 'insert of seeds for users...'
 users = []
 users_bar = ProgressBar.new(insert_lines_for_users)
@@ -28,7 +28,7 @@ columns_for_comments = [:user_id, :comment]
 user_count = User.count
 insert_lines_for_comments.times do
   comments << [
-    rand(0..user_count),
+    rand(1..user_count),
     Faker::Twitter.user[:status][:text]
   ]
 
