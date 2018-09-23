@@ -35,7 +35,8 @@ services:
       - MYSQL_PASSWORD=webapptips
       - MYSQL_DATABASE=webapptips
     volumes:
-      - ./docker-mysql:/etc/mysql/conf.d
+      - ./docker-mysql/conf.d:/etc/mysql/conf.d
+      - ./docker-mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
   # fluentd:
