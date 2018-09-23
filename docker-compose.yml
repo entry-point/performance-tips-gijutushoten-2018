@@ -1,7 +1,30 @@
 version: '3'
 services:
+  rails:
+    image: performance_tips_rails_2018
+    ports: 
+      - 3000:3000
+    environment:
+      - DB_USERNAME=webapptips
+      - DB_PASSWORD=webapptips
+      - DB_HOST=mysql
+      - REDIS_SERVER=redis
+    links:
+      - mysql
+      - redis 
+  sidekiq:
+    image: performance_tips_rails_2018
+    environment:
+      - DB_USERNAME=webapptips
+      - DB_PASSWORD=webapptips
+      - DB_HOST=mysql
+      - REDIS_SERVER=redis
+    links:
+      - mysql
+      - redis
+    command: bundle ex sidekiq
   redis:
-    image: redis
+    image: redis:4.0
     ports:
       - 6379:6379
   mysql:
@@ -15,10 +38,10 @@ services:
       - ./docker-mysql:/etc/mysql/conf.d
     ports:
       - 3306:3306
-  fluentd:
-    build:
-      context: ./docker-fluentd
-      dockerfile: Dockerfile-fluentd-custom
-    image: fluentd:custom
-    ports:
-      - 24224:24224
+  # fluentd:
+  #   build:
+  #     context: ./docker-fluentd
+  #     dockerfile: Dockerfile-fluentd-custom
+  #   image: fluentd:custom
+  #   ports:
+  #     - 24224:24224
