@@ -1,7 +1,7 @@
 version: '3'
 services:
   rails:
-    image: performance_tips_rails_2018
+    image: futoase/performance_tips_rails_2018:latest
     ports: 
       - 3000:3000
     environment:
@@ -12,8 +12,9 @@ services:
     links:
       - mysql
       - redis 
+
   sidekiq:
-    image: performance_tips_rails_2018
+    image: futoase/performance_tips_rails_2018:latest
     environment:
       - DB_USERNAME=webapptips
       - DB_PASSWORD=webapptips
@@ -23,10 +24,17 @@ services:
       - mysql
       - redis
     command: bundle ex sidekiq
+
   redis:
     image: redis:4.0
     ports:
       - 6379:6379
+
+  mysql_db:
+    image: futoase/mysql_db_performance_tips_rails_2018:latest
+    volumes:
+      - dbdata:/var/lib/mysql
+
   mysql:
     image: mysql:5.7
     environment:
@@ -37,8 +45,11 @@ services:
     volumes:
       - ./docker-mysql/conf.d:/etc/mysql/conf.d
       - ./docker-mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/mysql
     ports:
       - 3306:3306
+
+  # 今回は未使用とする。
   # fluentd:
   #   build:
   #     context: ./docker-fluentd
@@ -46,3 +57,6 @@ services:
   #   image: fluentd:custom
   #   ports:
   #     - 24224:24224
+
+volumes:
+  dbdata: # mysqlとmysql_dbでvolumeを共有
