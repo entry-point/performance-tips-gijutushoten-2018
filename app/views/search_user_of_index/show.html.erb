@@ -1,12 +1,40 @@
 <p>インデックスを利用して検索を行う場合</p>
 
+<p>検索するボタンを押すと、15回検索し、結果を表示します</p>
+
 <%= form_tag search_user_of_index_path, method: :get do %>
   名前: <%= text_field_tag(:name, @search_name, class: 'card') %>
   年齢(何歳以上): <%= text_field_tag(:age, @search_age, class: 'card') %>
   インデックスを使う: <%= check_box_tag(:use_index, :is_use, checked: @use_index) %>
-  <%= submit_tag "searching", data: { disable_with: "searching..." }, class: 'btn primary' %>
+  <%= submit_tag "検索をする", data: { disable_with: "検索をする" }, class: 'btn primary' %>
 <% end %>
 
+<h2>1回ごとの検索時間</h2>
+<p>全 <%= @elapsed_time_of_one_hundlred.length %> 回の平均時間: 
+  <%= (@elapsed_time_of_one_hundlred.inject{ |sum, el| sum + el }.to_f / @elapsed_time_of_one_hundlred.size).round(7) %>
+  秒
+</p>
+<p>総合経過時間: <%= @elapsed_time_of_sum.round(5) %> 秒</p>
+<table class="pure-table" style="margin-top: 20px;">
+  <thead>
+    <% (@elapsed_time_of_one_hundlred.length / @row_count).times do %>
+      <th>試行回数</th>
+      <th>経過時間</th>
+    <% end %>
+  </thead>
+  <tbody>
+    <% @row_count.times do |cnt_of_twenty| %>
+      <tr>
+        <% (@elapsed_time_of_one_hundlred.length / @row_count).times do |elapsed_cnt| %>
+          <td><%= (elapsed_cnt * @row_count) + cnt_of_twenty + 1 %></td>
+          <td><%= @elapsed_time_of_one_hundlred[(elapsed_cnt * @row_count) + cnt_of_twenty] %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>検索結果</h2>
 <table class="pure-table" style="margin-top: 20px;">
   <thead>
     <th>名前</th>
