@@ -3,20 +3,27 @@
 class SearchUserOfIndexController < ApplicationController
   after_action :assign_params
 
+  # 15回検索を行う  
   def show
-    if use_index?
-      @users = search_users_use_index(*generate_conditions)
-    else
-      @users = search_users_no_use_index(*generate_conditions)
+    @elapsed_time_of_sum = 0
+    @elapsed_time_of_one_hundlred = []
+    @row_count = 20
+    start_time = Time.now
+    100.times do
+      @users = if use_index?
+                 search_users_use_index(*generate_conditions)
+               else
+                 search_users_no_use_index(*generate_conditions)
+               end
+      elapsed_time = (Time.now - start_time).round(7)
+      @elapsed_time_of_sum += elapsed_time
+      @elapsed_time_of_one_hundlred << elapsed_time
     end
-
     @use_index = use_index?
   end
 
   def age
-    if params[:age].try(:strip) =~ /\A[0-9]+\z/.present?
-      params[:age].strip.to_i
-    end
+    params[:age].strip.to_i if params[:age].try(:strip) =~ /\A[0-9]+\z/.present?
   end
 
   def name
@@ -42,7 +49,7 @@ class SearchUserOfIndexController < ApplicationController
 
     if name.present?
       condition << 'name LIKE :name'
-      search_params[:name] = "#{params[:name]}%"
+      search_params[:name] = "%#{params[:name]}%"
     end
 
     if age.present?
@@ -70,11 +77,13 @@ class SearchUserOfIndexController < ApplicationController
     if condition.length.zero?
       User.from('users use index()')
         .order(:name)
+        .order(id: :desc)
         .page(current_page)
     else
       User.from('users use index()')
         .where(condition.join(' and '), search_params)
         .order(:name)
+        .order(id: :desc)
         .page(current_page)
     end
   end
