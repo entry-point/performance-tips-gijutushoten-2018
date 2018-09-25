@@ -3,12 +3,13 @@
     <div class="loading" v-if="isLoading"></div>
     <h1>N+1を試す</h1>
     <div>
-      <p>検索時間(秒) {{ searchTimeSeconds }} </p>
+      <button v-on:click="getUserInformation" class="btn primary">検索を開始</button>
       <input type="checkbox" id="enable_n_plus_one" v-model="enableNPlusOne">
-      <label for="enable_n_plus_one">N+1を利用する</label>
+      <label for="enable_n_plus_one">N+1を発生させる</label>
     </div>
     <div>
-      <p>SQLを呼び出した数 = {{ sqlCallCount }}</p>
+      <p>SQLを呼び出した数: {{ sqlCallCount }} 回</p>
+      <p>APIをコールして結果が返るまでの時間: {{ searchTimeSeconds }} 秒</p>
     </div>
     <div v-if="usersComments.length === 0">
       読み出し中
@@ -81,6 +82,7 @@ export default {
       enableNPlusOne: false,
       usersComments: [],
       searchTimeSeconds: 0,
+      searchStartTime: 0,
       sqlCallCount: 0,
       isLoading: false,
       fullPage: true
@@ -92,13 +94,14 @@ export default {
   methods: {
     getUserInformation: function(page=1) {
       this.isLoading = true;
+      this.searchStartTime = new Date();
       Vue.axios.get(`${nPlusOneApi}?page=${page}&enable_n_plus_one=${
         this.enableNPlusOne ? 1 : 0
       }`).then((response) => {
         this.isLoading = false;
         this.usersComments = response.data.users_comments;
-        this.searchTimeSeconds = response.data.search_time_seconds;
         this.sqlCallCount = response.data.sql_call_count;
+        this.searchTimeSeconds = ((new Date) - this.searchStartTime) / 1000;
       });
     }
   },

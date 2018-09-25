@@ -1,20 +1,14 @@
 class Api::NPlusOneController < ApplicationController
   def show
-    search_start_time = Time.now.to_f
     @sql_call_count = 0
-
     users_comments = if n_plus_one?
-      user_comments_n_plus_1
-    else
-      users_comments_of_joins
-    end
-
-    search_end_time = Time.now.to_f
-    search_time_seconds = (search_end_time - search_start_time) * 1000
+                       user_comments_n_plus_1
+                     else
+                       users_comments_of_joins
+                     end
 
     render json: {
       users_comments: users_comments, 
-      search_time_seconds: search_time_seconds,
       sql_call_count: @sql_call_count
     }
   end
