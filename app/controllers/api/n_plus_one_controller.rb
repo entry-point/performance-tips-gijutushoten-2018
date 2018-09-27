@@ -8,7 +8,7 @@ class Api::NPlusOneController < ApplicationController
                      end
 
     render json: {
-      users_comments: users_comments, 
+      users_comments: users_comments,
       sql_call_count: @sql_call_count
     }
   end
@@ -29,9 +29,11 @@ class Api::NPlusOneController < ApplicationController
 
   def user_comments_n_plus_1
     results = []
-    comments = Comment.offset(1) # rand(1..Comment.count))
+    comments = Comment.all
     @sql_call_count += 1
+    # 1. 取得したコメントレコード全件をeachにより分解
     comments.each do |c|
+      # 2. 分解したコメントレコードのuser_idを利用し、userレコードを取得
       user = User.find(c.user_id)
       @sql_call_count += 1
       results << OpenStruct.new(
