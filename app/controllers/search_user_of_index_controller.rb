@@ -3,7 +3,7 @@
 class SearchUserOfIndexController < ApplicationController
   after_action :assign_params
 
-  # 15回検索を行う  
+  # 100回検索を行う
   def show
     @elapsed_time_of_sum = 0
     @elapsed_time_of_one_hundlred = []
