@@ -1,19 +1,38 @@
-# セットアップ手順
+# 立ち上げについて
 
-以下のソフトウェアをインストールする必要がある。
+Docker image化しているので、アプリケーションの挙動を確かめたい場合は、以下のコマンドを利用すれば良い。Docker Composeをインストールしていない人、Dockerを利用していない人はインストールしよう。
+
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+```
+> docker-compose up
+```
+
+このコマンドを実行すれば、後は `http://localhost:3000/` にアクセスすれば確認できる。
+
+# docker image buildの方法
+
+以下のコマンドを実行することで、docker imageを作成することができる
+
+```
+> docker build -f docker/performance_tips_rails_2018/Dockerfile -t futoase/performance_tips_rails_2018:latest .
+```
+
+# マニュアルでアプリを操作する場合
+
+以下のソフトウェアが必要である。
 
 - [node](https://nodejs.org)
-  - 6.10以降
+  - 8.12以降
 - [ruby](https://www.ruby-lang.org/)
-  - 2.4以降
-- [docker](https://www.docker.com/)
-- [docker-compose](https://docs.docker.com/compose/)
+  - 2.5以降
 - [yarn](https://yarnpkg.com/lang/en/)
 - [mysql-client](https://dev.mysql.com/doc/refman/5.6/ja/programs-client.html)
 
 インストールの仕方は、各サイトを参考。
 mysqlについては、Railsアプリにてmysql2 gemを利用するため、
-mysqlをビルドできる環境が必要。mysql向けのヘッダファイル、gccコマンドなど。
+mysql-client及びMySQLのヘッダファイルが必要となる。
 
 # アプリケーションの動かし方
 
