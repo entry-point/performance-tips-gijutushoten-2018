@@ -1,6 +1,6 @@
 <p>インデックスを利用して検索を行う場合</p>
 
-<p>検索するボタンを押すと、15回検索し、結果を表示します</p>
+<p>検索するボタンを押すと、内部で <%= @elapsed_time_of_one_hundlred.length %> 回検索し、結果を表示します</p>
 
 <%= form_tag search_user_of_index_path, method: :get do %>
   名前: <%= text_field_tag(:name, @search_name, class: 'card') %>
@@ -10,7 +10,7 @@
 <% end %>
 
 <h2>1回ごとの検索時間</h2>
-<p>全 <%= @elapsed_time_of_one_hundlred.length %> 回の平均時間: 
+<p>全 <%= @elapsed_time_of_one_hundlred.length %> 回の平均時間:
   <%= (@elapsed_time_of_one_hundlred.inject{ |sum, el| sum + el }.to_f / @elapsed_time_of_one_hundlred.size).round(7) %>
   秒
 </p>
